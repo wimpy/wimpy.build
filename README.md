@@ -12,7 +12,7 @@ The required parameters are
 The optional parameters are
 
   - `wimpy_docker_registry`: Defaults to Docker Hub. It must have trailing slash.
-  - `wimpy_docker_image_name`: Defaults to your project's name.
+  - `wimpy_docker_image_name`: Defaults to your project's name. If using private Docker Registry, this parameter must contain the registry in the name.
 
 ### Login to Docker Registry
 This role handles the login with your Docker Registry.
