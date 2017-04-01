@@ -1,0 +1,3 @@
+---
+
+wimpy_docker_image_name: "{{ wimpy_project_name if wimpy_docker_registry is not defined else wimpy_docker_registry ~ wimpy_project_name }}"

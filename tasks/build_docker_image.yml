@@ -1,0 +1,4 @@
+---
+
+- name: "Build docker image"
+  shell: "docker build --tag {{ wimpy_docker_image_name }}:{{ wimpy_release_version | string }} \"{{ lookup('env','PWD') }}\""

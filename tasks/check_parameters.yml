@@ -1,0 +1,23 @@
+---
+
+- name: "Checking that required parameters are present"
+  fail: msg="{{ item }} is a required variable. Set it in your playbook file or pass it as extra var"
+  when: not {{ item }} is defined
+  with_items:
+    - wimpy_project_name
+    - wimpy_release_version
+
+- name: "Set regex pattern for AWS ECR"
+  set_fact: pattern="^(.*).dkr.ecr.(.*).amazonaws.com/$"
+
+- name: "Extract AWS account id"
+  set_fact: wimpy_aws_account_id="{{ wimpy_docker_registry | regex_replace(pattern, "\\1" ) }}"
+  when:
+    - wimpy_docker_registry is defined
+    - wimpy_docker_registry | match(pattern)
+
+- name: "Extract AWS region"
+  set_fact: wimpy_aws_region="{{ wimpy_docker_registry | regex_replace(pattern, "\\2" ) }}"
+  when:
+    - wimpy_docker_registry is defined
+    - wimpy_docker_registry | match(pattern)
