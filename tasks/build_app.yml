@@ -1,8 +1,8 @@
 ---
 
-- stat: path="{{ lookup('env','PWD') }}/docker-compose-build.yml"
-  register: docker_compose_build
+- stat: path="{{ wimpy_docker_compose_build }}"
+  register: wimpy_docker_compose_build_file
 
 - name: "Build application with Docker Compose, if docker-compose-build.yml exists"
-  shell: "docker-compose -f docker-compose-build.yml up"
-  when: docker_compose_build.stat.exists
+  shell: "docker-compose -f {{ wimpy_docker_compose_build }} up"
+  when: wimpy_docker_compose_build_file.stat.exists
