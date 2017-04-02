@@ -1,0 +1,11 @@
+version: '2'
+services:
+  app:
+    image: "composer:1.4"
+    command: "install"
+    restart: "no"
+    tty: true
+    stdin_open: true
+    volumes:
+      - "$PWD:/app"
+      - "$HOME/.composer:/composer"

@@ -1,0 +1,11 @@
+version: '2'
+services:
+  build:
+    image: "node:7.8-alpine"
+    command: "npm run build"
+    restart: "no"
+    working_dir: "/home/app"
+    volumes:
+      - "$PWD:/home/app"
+    env_file:
+      - ./build.env

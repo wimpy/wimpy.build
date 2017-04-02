@@ -1,0 +1,9 @@
+version: '2'
+services:
+  app:
+    image: "niaquinto/gradle"
+    command: "clean build"
+    restart: "no"
+    volumes:
+      - "$PWD:/usr/bin/app"
+      - "$HOME/.gradle/caches:/root/.gradle/caches"
