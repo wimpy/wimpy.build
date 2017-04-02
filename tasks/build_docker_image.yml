@@ -1,4 +1,23 @@
 ---
 
-- name: "Build docker image"
-  shell: "docker build --tag {{ wimpy_docker_image_name }}:{{ wimpy_release_version | string }} \"{{ lookup('env','PWD') }}\""
+- name: "Get ECR Token"
+  shell: "aws ecr get-authorization-token --region {{ wimpy_aws_region }} --output text --query \"authorizationData[].authorizationToken\""
+  when:
+   - wimpy_aws_region is defined
+   - wimpy_aws_account_id is defined
+  register: wimpy_aws_ecr_password
+
+- name: "Log into private registry"
+  docker_login:
+    registry: "{{ wimpy_docker_registry | default(omit) }}"
+    email: "{{ wimpy_docker_registry_email | default(none) }}"
+    username: "{{ wimpy_docker_registry_username | default('AWS') }}"
+    password: "{{ wimpy_docker_registry_password | default((wimpy_aws_ecr_password.stdout | b64decode).split(':')[1] if wimpy_aws_ecr_password.changed else '') }}"
+    reauthorize: yes
+
+- name: "Build docker image and push it to registry"
+  docker_image:
+    path: "{{ lookup('env','PWD') }}"
+    name: "{{ wimpy_docker_image_name }}:{{ wimpy_release_version | string }}"
+    push: yes
+    buildargs: "{{ wimpy_docker_build_args }}"
