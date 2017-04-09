@@ -1,28 +1,33 @@
-# Wimpy Build
-Ansible playbook to build your application using Docker Compose, so you can define which build tool to use.
-It will then create a docker image with your application, and finally push that image to a Docker Registry.
+# Wimpy Build [![Build Status](https://travis-ci.org/wimpy/wimpy.build.svg?branch=master)](https://travis-ci.org/wimpy/wimpy.build)
+Ansible role to build your application using Docker Compose, so you can define which build tool to use.
+It will then create a Docker image with your application, and finally push that image to a Docker Registry.
 
-## Required Parameters
-The required parameters are
+## Parameters
+The parameters are
 
   - `wimpy_project_name`: The name to identify your project.
   - `wimpy_release_version`: Used for tagging your docker image.
-
-## Optional Parameters
-The optional parameters are
-
-  - `wimpy_docker_registry`: Defaults to Docker Hub. It must have trailing slash.
-  - `wimpy_docker_image_name`: Defaults to your project's name. If using private Docker Registry, this parameter must contain the registry in the name.
+  - `wimpy_docker_image_name`: (Optional: Defaults to `wimpy_project_name`). If using a Docker Registry other than DockerHub, this parameter must contain the registry host in the name.
+  - `wimpy_docker_skip_login:`: (Optional: Defaults to `False`). If using a Docker Registry that doesnt't require you to login.
 
 ### Login to Docker Registry
-This role handles the login with your Docker Registry.
+When publishing to a Docker Registry that needs you to login (like DockerHub), pass the following parameters
 
-When publishing to other Docker Registry that needs you to login (like DockerHub), pass the following parameters
+  - `wimpy_docker_registry`: **It must have trailing slash**. Empty by default, which means DockerHub.
+  - `wimpy_docker_registry_username`: Credentials for the Docker Registry.
+  - `wimpy_docker_registry_email`: Credentials for the Docker Registry.
+  - `wimpy_docker_registry_password`: Credentials for the Docker Registry.
 
-  - `wimpy_docker_registry_username`
-  - `wimpy_docker_registry_email`
-  - `wimpy_docker_registry_password`
+## Usage
 
-If you pass the `wimpy_docker_registry` parameter containing an AWS ECR address, it will login with ECR, given that the computer executing this role has the right permissions.
+```yaml
+- hosts: localhost
+  connection: local
+  vars:
+    wimpy_project_name: "my-project"
+    wimpy_release_version: "9da8s9fud8"
+  roles:
+    - wimpy.build
 
+```
 

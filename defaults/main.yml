@@ -1,6 +1,6 @@
 ---
 
 wimpy_docker_image_name: "{{ wimpy_project_name if wimpy_docker_registry is not defined else wimpy_docker_registry ~ wimpy_project_name }}"
-wimpy_ecr_pattern: "^(.*).dkr.ecr.(.*).amazonaws.com/$"
 wimpy_docker_build_args: {}
 wimpy_docker_compose_build: "{{ lookup('env','PWD') }}/docker-compose-build.yml"
+wimpy_docker_skip_login: False
