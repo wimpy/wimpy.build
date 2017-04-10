@@ -6,11 +6,3 @@
   with_items:
     - wimpy_project_name
     - wimpy_release_version
-
-- name: "Extract AWS region and account id from registry"
-  set_fact:
-    wimpy_aws_account_id: "{{ wimpy_docker_registry | regex_replace(wimpy_ecr_pattern, '\\1' ) }}"
-    wimpy_aws_region: "{{ wimpy_docker_registry | regex_replace(wimpy_ecr_pattern, '\\2' ) }}"
-  when:
-    - wimpy_docker_registry is defined
-    - wimpy_docker_registry | match(wimpy_ecr_pattern)
