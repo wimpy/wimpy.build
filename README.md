@@ -18,6 +18,9 @@ When publishing to a Docker Registry that needs you to login (like DockerHub), p
   - `wimpy_docker_registry_email`: Credentials for the Docker Registry.
   - `wimpy_docker_registry_password`: Credentials for the Docker Registry.
 
+### AWS ECR
+If you are using AWS ECR to store your Docker images, we recommend you to use [wimpy.ecr](https://github.com/wimpy/wimpy.ecr) before `wimpy.build` in your playbooks.
+
 ## Usage
 
 ```yaml
