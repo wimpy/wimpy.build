@@ -2,7 +2,7 @@
 - hosts: localhost
   connection: local
   vars:
-    wimpy_project_name: my-project
+    wimpy_application_name: my-project
     wimpy_release_version: 9da8s9fud8
   roles:
     - wimpy.build

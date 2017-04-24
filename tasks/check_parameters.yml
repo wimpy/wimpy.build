@@ -4,5 +4,5 @@
   fail: msg="{{ item }} is a required variable. Set it in your playbook file or pass it as extra var"
   when: not {{ item }} is defined
   with_items:
-    - wimpy_project_name
+    - wimpy_application_name
     - wimpy_release_version

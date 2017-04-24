@@ -5,9 +5,9 @@ It will then create a Docker image with your application, and finally push that 
 ## Parameters
 The parameters are
 
-  - `wimpy_project_name`: The name to identify your project.
+  - `wimpy_application_name`: The name to identify your project.
   - `wimpy_release_version`: Used for tagging your docker image.
-  - `wimpy_docker_image_name`: (Optional: Defaults to `wimpy_project_name`). If using a Docker Registry other than DockerHub, this parameter must contain the registry host in the name.
+  - `wimpy_docker_image_name`: (Optional: Defaults to `wimpy_application_name`). If using a Docker Registry other than DockerHub, this parameter must contain the registry host in the name.
   - `wimpy_docker_skip_login:`: (Optional: Defaults to `False`). If using a Docker Registry that doesnt't require you to login.
 
 ### Login to Docker Registry
@@ -27,7 +27,7 @@ If you are using AWS ECR to store your Docker images, we recommend you to use [w
 - hosts: localhost
   connection: local
   vars:
-    wimpy_project_name: "my-project"
+    wimpy_application_name: "my-project"
     wimpy_release_version: "9da8s9fud8"
   roles:
     - wimpy.build
