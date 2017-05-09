@@ -10,9 +10,19 @@
   when:
     - not wimpy_docker_skip_login
 
-- name: "Build docker image and push it to registry"
+- name: "Build docker image"
   docker_image:
     path: "{{ lookup('env','PWD') }}"
     name: "{{ wimpy_docker_image_name }}:{{ wimpy_release_version | string }}"
-    push: yes
     buildargs: "{{ wimpy_docker_build_args }}"
+
+- name: "Tag docker image with latest"
+  docker_image:
+    path: "{{ lookup('env','PWD') }}"
+    name: "{{ wimpy_docker_image_name }}:latest"
+    buildargs: "{{ wimpy_docker_build_args }}"
+
+- name: "Push images to registry"
+  docker_image:
+    name: "{{ wimpy_docker_image_name }}"
+    push: yes
