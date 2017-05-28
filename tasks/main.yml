@@ -1,5 +1,6 @@
 ---
 
 - include: check_parameters.yml
-- include: build_app.yml
+- include: create_docker_registry.yml
+  when: wimpy_docker_registry is not defined
 - include: build_docker_image.yml
