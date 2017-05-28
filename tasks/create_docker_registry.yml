@@ -1,0 +1,33 @@
+---
+
+- name: "Rendering CloudFormation template"
+  shell: python {{ role_path }}/troposphere/ecr.py > /tmp/cloudformation-ecr-{{ wimpy_deploy_id }}.json
+  changed_when: false
+
+- name: "Create Docker Registry using AWS Elastic Container Registry"
+  cloudformation:
+    profile: "{{ boto_profile | default(omit) }}"
+    region: "{{ wimpy_aws_region }}"
+    stack_name: "ECR-{{ wimpy_application_name }}"
+    state: "present"
+    template: "/tmp/cloudformation-ecr-{{ wimpy_deploy_id }}.json"
+    template_parameters:
+      AppName: "{{ wimpy_application_name }}"
+    tags:
+      Type: "registry"
+      Managed: "Wimpy"
+  register: wimpy_cf_ecr
+
+- set_fact:
+    wimpy_ecr_cmd_profile: "{{ '--profile ' ~ boto_profile if boto_profile is defined else '' }}"
+
+- name: "Get ECR Token"
+  shell: "aws ecr get-authorization-token --region {{ wimpy_aws_region }} {{ wimpy_ecr_cmd_profile }} --output text --query \"authorizationData[].authorizationToken\""
+  register: wimpy_aws_ecr_password
+  changed_when: False
+
+- set_fact:
+     wimpy_docker_image_name: "{{ wimpy_cf_ecr['stack_outputs']['Repository'] }}"
+     wimpy_docker_registry: "{{ wimpy_cf_ecr['stack_outputs']['Registry'] }}"
+     wimpy_docker_registry_username: "AWS"
+     wimpy_docker_registry_password: "{{ (wimpy_aws_ecr_password.stdout | b64decode).split(':')[1] }}"
