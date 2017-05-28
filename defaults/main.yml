@@ -5,3 +5,4 @@ wimpy_docker_image_name: "{{ wimpy_application_name if wimpy_docker_registry is 
 wimpy_docker_build_args: {}
 wimpy_docker_compose_build: "{{ lookup('env','PWD') }}/docker-compose-build.yml"
 wimpy_docker_skip_login: False
+wimpy_aws_region: "eu-west-1"
