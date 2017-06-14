@@ -28,3 +28,19 @@
   when:
     - wimpy_docker_image_tag_latest
 
+- name: "Delete local image built"
+  docker_image:
+    name: "{{ wimpy_docker_image_name }}:{{ wimpy_release_version | string }}"
+    state: absent
+    push: no
+  when:
+    - wimpy_docker_image_delete_after_build
+
+- name: "Delete local image built (latest)"
+  docker_image:
+    name: "{{ wimpy_docker_image_name }}:latest"
+    state: absent
+    push: no
+  when:
+    - wimpy_docker_image_delete_after_build
+    - wimpy_docker_image_tag_latest
