@@ -26,4 +26,4 @@
     force: "{{ wimpy_docker_image_force }}"
     buildargs: "{{ wimpy_docker_build_args }}"
   when:
-    - wimpy_docker_image_tag_latest
+    - not wimpy_docker_image_skip_latest_tag
