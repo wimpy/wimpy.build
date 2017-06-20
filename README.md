@@ -10,7 +10,6 @@ The parameters are
   - `wimpy_docker_skip_login:`: (Optional: Defaults to `False`). If using a Docker Registry that doesnt't require you to login.
   - `wimpy_docker_image_force`: (Optional: Defaults to `no`). Creates a new docker image even if one with the same name and tag already exists in the repository. Useful to override SNAPSHOT builds.
   - `wimpy_docker_image_tag_latest`: (Optional: Defaults to `True`). Tag the new built image also as latest. If set to False will be only tagged with the version. Useful if releasing a patch for non mainstream branch like older versions or building non stable code.
-  - `wimpy_docker_image_delete_after_build`: (Optional: Defaults to `False`). Deletes the new built image from local docker repository (not from remote)
 
 ### Login to Docker Registry
 When publishing to a Docker Registry that needs you to login (like DockerHub), pass the following parameters

@@ -7,5 +7,4 @@ wimpy_docker_compose_build: "{{ lookup('env','PWD') }}/docker-compose-build.yml"
 wimpy_docker_skip_login: False
 wimpy_docker_image_tag_latest: True
 wimpy_docker_image_force: no
-wimpy_docker_image_delete_after_build: False
 wimpy_aws_region: "eu-west-1"
