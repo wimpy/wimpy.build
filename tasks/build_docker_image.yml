@@ -15,6 +15,7 @@
     path: "{{ lookup('env','PWD') }}"
     name: "{{ wimpy_docker_image_name }}:{{ wimpy_release_version | string }}"
     push: yes
+    force: "{{ wimpy_docker_image_force }}"
     buildargs: "{{ wimpy_docker_build_args }}"
 
 - name: "Build and push latest tag"
@@ -22,4 +23,7 @@
     path: "{{ lookup('env','PWD') }}"
     name: "{{ wimpy_docker_image_name }}:latest"
     push: yes
+    force: "{{ wimpy_docker_image_force }}"
     buildargs: "{{ wimpy_docker_build_args }}"
+  when:
+    - not wimpy_docker_image_skip_latest_tag
